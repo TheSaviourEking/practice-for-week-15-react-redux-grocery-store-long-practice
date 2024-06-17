@@ -31,7 +31,7 @@ const cartReducer = (state = {}, action) => {
             const newState = {
                 ...state
             }
-            delete newState[action.payload.produceId]
+            delete newState[action.payload.produceId];
             return newState;
         }
         default:
