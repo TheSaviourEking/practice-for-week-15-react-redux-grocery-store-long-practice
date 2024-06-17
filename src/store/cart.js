@@ -1,4 +1,5 @@
 const ADDTOCART = 'cart/ADD';
+const REMOVEFROMCART = 'cart/REMOVE';
 
 export const addToCart = (produceId) => {
     return {
@@ -7,9 +8,16 @@ export const addToCart = (produceId) => {
     }
 };
 
+export const removeFromCart = (produceId) => (
+    {
+        type: REMOVEFROMCART,
+        payload: { produceId }
+    }
+)
+
 const cartReducer = (state = {}, action) => {
     switch (action.type) {
-        case ADDTOCART:
+        case ADDTOCART: {
             const newState = {
                 ...state,
                 [action.payload.produceId]: {
@@ -18,6 +26,14 @@ const cartReducer = (state = {}, action) => {
                 }
             };
             return newState;
+        }
+        case REMOVEFROMCART: {
+            const newState = {
+                ...state
+            }
+            delete newState[action.payload.produceId]
+            return newState;
+        }
         default:
             return state;
     }
