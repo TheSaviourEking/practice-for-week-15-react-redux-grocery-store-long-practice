@@ -1,36 +1,36 @@
-const ADDTOCART = 'cart/ADD';
-const REMOVEFROMCART = 'cart/REMOVE';
-const INCREMENTITEMCOUNT = 'cart/INCREMENTITEMCOUNT';
-const DECREMENTITEMCOUNT = 'cart/DECREMENTITEMCOUNT';
-const EMPTYCART = 'cart/EMPTY';
+const ADD_TO_CART = 'cart/ADD';
+const REMOVE_FROM_CART = 'cart/REMOVE';
+const INCREMENT_ITEM_COUNT = 'cart/INCREMENT_ITEM_COUNT';
+const DECREMENT_ITEM_COUNT = 'cart/DECREMENT_ITEM_COUNT';
+const EMPTY_CART = 'cart/EMPTY';
 
 const initialState = { items: {}, order: [] };
 
 export const addToCart = (produceId) => {
     return {
-        type: ADDTOCART,
+        type: ADD_TO_CART,
         payload: { produceId }
     }
 };
 
 export const removeFromCart = (produceId) => (
     {
-        type: REMOVEFROMCART,
+        type: REMOVE_FROM_CART,
         payload: { produceId }
     }
 )
 
 export const incrementItemCount = (produceId) => ({
-    type: INCREMENTITEMCOUNT,
+    type: INCREMENT_ITEM_COUNT,
     payload: { produceId }
 })
 
 export const decrementItemCount = (produceId) => ({
-    type: DECREMENTITEMCOUNT,
+    type: DECREMENT_ITEM_COUNT,
     payload: { produceId }
 })
 
-export const emptyCart = () => ({ type: EMPTYCART })
+export const emptyCart = () => ({ type: EMPTY_CART })
 
 export const getCartItems = (state) => {
     const { cart, produce } = state;
@@ -52,7 +52,7 @@ const cartReducer = (state = initialState, action) => {
         ]
     };
     switch (action.type) {
-        case ADDTOCART: {
+        case ADD_TO_CART: {
             const produceInOrderArr = newState.order.find(item => item.id === action.payload.produceId);
             if (!produceInOrderArr) {
                 newState.order.push({
@@ -62,22 +62,22 @@ const cartReducer = (state = initialState, action) => {
             }
             return newState;
         }
-        case REMOVEFROMCART: {
+        case REMOVE_FROM_CART: {
             newState.order = newState.order.filter(item => item.id !== action.payload?.produceId);
             delete newState.items[action.payload.produceId];
             return newState;
         }
-        case INCREMENTITEMCOUNT: {
+        case INCREMENT_ITEM_COUNT: {
             ++newState.order.find(item => item.id === action.payload.produceId).count;
             ++newState.items[action.payload.produceId].count;
             return newState;
         }
-        case DECREMENTITEMCOUNT: {
+        case DECREMENT_ITEM_COUNT: {
             --newState.order.find(item => item.id === action.payload.produceId).count;
             --newState.items[action.payload.produceId].count;
             return newState;
         }
-        case EMPTYCART: {
+        case EMPTY_CART: {
             return {};
         }
         default:
