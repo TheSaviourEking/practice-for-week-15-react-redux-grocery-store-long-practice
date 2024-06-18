@@ -1,11 +1,19 @@
 import produceData from '../mockData/produce.json';
 
 const POPULATE = 'produce/POPULATE';
+const LIKE = 'produce/LIKE';
 
 export const populateProduce = () => {
     return {
         type: POPULATE,
         produce: produceData
+    }
+};
+
+export const likeProduce = (produceId) => {
+    return {
+        type: LIKE,
+        payload: { produceId }
     }
 };
 
@@ -17,6 +25,12 @@ const produceReducer = (state = {}, action) => {
                 newState[produce.id] = produce;
             })
             return newState;
+        case LIKE: {
+            const newState = {...state};
+            const produce = newState[action.payload.produceId]
+            produce.liked = !produce.liked;
+            return newState;
+        }
         default:
             return state;
     }
