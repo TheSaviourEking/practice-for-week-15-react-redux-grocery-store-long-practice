@@ -17,6 +17,8 @@ export const likeProduce = (produceId) => {
     }
 };
 
+export const getAllProduce = (state) => Object.values(state.produce);
+
 const produceReducer = (state = {}, action) => {
     switch (action.type) {
         case POPULATE:
@@ -26,7 +28,7 @@ const produceReducer = (state = {}, action) => {
             })
             return newState;
         case LIKE: {
-            const newState = {...state};
+            const newState = { ...state };
             const produce = newState[action.payload.produceId]
             produce.liked = !produce.liked;
             return newState;

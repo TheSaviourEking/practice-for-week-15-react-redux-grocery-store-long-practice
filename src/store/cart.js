@@ -30,6 +30,11 @@ export const decrementItemCount = (produceId) => ({
 
 export const emptyCart = () => ({ type: EMPTYCART })
 
+export const getCartItems = (state) => {
+    const { cart, produce } = state;
+    return Object.values(cart).map(item => ({ ...item, ...produce[item.id] }))
+}
+
 const cartReducer = (state = {}, action) => {
     switch (action.type) {
         case ADDTOCART: {
