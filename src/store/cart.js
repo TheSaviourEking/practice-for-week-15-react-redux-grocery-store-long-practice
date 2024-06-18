@@ -2,6 +2,7 @@ const ADDTOCART = 'cart/ADD';
 const REMOVEFROMCART = 'cart/REMOVE';
 const INCREMENTITEMCOUNT = 'cart/INCREMENTITEMCOUNT';
 const DECREMENTITEMCOUNT = 'cart/DECREMENTITEMCOUNT';
+const EMPTYCART = 'cart/EMPTY';
 
 export const addToCart = (produceId) => {
     return {
@@ -26,6 +27,8 @@ export const decrementItemCount = (produceId) => ({
     type: DECREMENTITEMCOUNT,
     payload: { produceId }
 })
+
+export const emptyCart = () => ({ type: EMPTYCART })
 
 const cartReducer = (state = {}, action) => {
     switch (action.type) {
@@ -59,6 +62,9 @@ const cartReducer = (state = {}, action) => {
             };
             newState[action.payload.produceId].count--;
             return newState;
+        }
+        case EMPTYCART: {
+            return {};
         }
         default:
             return state;
